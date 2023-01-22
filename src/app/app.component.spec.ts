@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'rgb-aqua-mart'`, () => {
+  it(`should have as title 'adminlte'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('rgb-aqua-mart');
+    expect(app.title).toEqual('adminlte');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('rgb-aqua-mart app is running!');
+    expect(compiled.querySelector('.content span').textContent).toContain('adminlte app is running!');
   });
 });
