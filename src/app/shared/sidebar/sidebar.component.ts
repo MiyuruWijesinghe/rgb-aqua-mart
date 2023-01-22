@@ -15,12 +15,14 @@ export class SidebarComponent implements OnInit {
 
   perfil = localStorage.getItem('nombre');
 
-  menuItems: any[];
+  menu1Items: any[];
+  menu2Items: any[];
+  menu3Items: any[];
+
   constructor(private sidebarService: SidebarService, private router:Router) {
-
-    this.menuItems = sidebarService.menu;
-    console.log(this.menuItems);
-
+    this.menu1Items = sidebarService.menu1;
+    this.menu2Items = sidebarService.menu2;
+    this.menu3Items = sidebarService.menu3;
   }
 
   ngOnInit(): void {
@@ -28,13 +30,10 @@ export class SidebarComponent implements OnInit {
   }
 
   logout(){
-    
     localStorage.removeItem('token');
     localStorage.removeItem('usuarioId');
     localStorage.removeItem('nombre');
     this.router.navigateByUrl('/login');
-
-
   }
 
 }

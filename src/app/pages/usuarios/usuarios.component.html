@@ -4,7 +4,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Lista de Usuarios</h3><br>
+                        <h3 class="card-title">User List</h3><br>
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarUsuario">
                             <i class="fas fa-user-plus"></i> Agregar
                           </button>
@@ -90,7 +90,7 @@
                                         <select class="form-control" formControlName="role" (change)="changeRole($event)">
                                         <option value="">Seleccione el rol</option>
                                         <option *ngFor="let role of Roles" >{{role}}</option>
-                                        
+
                                       </select>
 
                                     </div>
@@ -156,7 +156,7 @@
                                         <select class="form-control" formControlName="role" (change)="changeRole($event)">
                                         <option value="">Seleccione el rol</option>
                                         <option *ngFor="let role of Roles" >{{role}}</option>
-                                        
+
                                       </select>
 
                                     </div>
