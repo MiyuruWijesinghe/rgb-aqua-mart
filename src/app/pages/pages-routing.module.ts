@@ -6,15 +6,17 @@ import { UsuariosComponent } from './usuarios/usuarios.component';
 import { ProductosComponent } from './productos/productos.component';
 import { StockComponent } from './stock/stock.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { BrandsComponent } from './brands/brands.component';
 
 const routes: Routes = [
   {
-    path: 'dashboard', component: PagesComponent, canActivate:[AuthGuard],
+    path: 'dashboard', component: PagesComponent, canActivate: [AuthGuard],
     children: [
       { path: '', component: DashboardComponent, data: { titulo: 'Dashboard' } },
       { path: 'usuarios', component: UsuariosComponent, data: { titulo: 'Usuarios' } },
       { path: 'productos', component: ProductosComponent, data: { titulo: 'Productos' } },
       { path: 'stock', component: StockComponent, data: { titulo: 'Stock' } },
+      { path: 'brands', component: BrandsComponent, data: { titulo: 'Brands' } },
     ]
   }
 ];

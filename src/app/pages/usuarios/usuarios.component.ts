@@ -15,7 +15,7 @@ declare var $:any;
   ]
 })
 export class UsuariosComponent implements OnInit,OnDestroy {
-  
+
   dtOptions: DataTables.Settings = {};
   usuarios:Usuario[]=[];
   dtTrigger: Subject<any> = new Subject<any>();
@@ -24,7 +24,7 @@ export class UsuariosComponent implements OnInit,OnDestroy {
   Roles: any = ['admin', 'editor'];
 
   public registerForm = this.fb.group({
-  
+
     nombre: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required]],
@@ -35,7 +35,7 @@ export class UsuariosComponent implements OnInit,OnDestroy {
   });
 
   public cambioContrasena = this.fb.group({
-    
+
     oldPassword:[''],
     newPassword:[''],
 
@@ -44,22 +44,21 @@ export class UsuariosComponent implements OnInit,OnDestroy {
   constructor(private usuarioSvc: UsuarioService, private fb:FormBuilder, private router:Router) { }
 
   ngOnInit(): void {
-    
+
     this.obtenerUsuario();
     this.dtOptions = {
-    
+
       pageLength: 10,
       searching: true,
       responsive:true,
-      info:true,
-      language: {url:'//cdn.datatables.net/plug-ins/1.10.25/i18n/Spanish.json'}
+      info:true
     };
 
   }
 
   obtenerUsuario(){
-  
-    this.usuarioSvc.obtenerUsuarios().subscribe((res:any) =>{    
+
+    this.usuarioSvc.obtenerUsuarios().subscribe((res:any) =>{
      this.usuarios =res;
      this.dtTrigger.next();
 
@@ -86,7 +85,7 @@ export class UsuariosComponent implements OnInit,OnDestroy {
 
       });
     }, (err)=>{
-      
+
       const errorServer = JSON.parse(err.error);
 
       Swal.fire('Error', errorServer.message, 'error');
@@ -98,7 +97,7 @@ export class UsuariosComponent implements OnInit,OnDestroy {
   cambiarPass(id:string){
 
     let idUser = id;
-    
+
 
     $('#cambiarPass').modal('toggle');
     $('#cambiarPass').modal('show');
@@ -109,11 +108,11 @@ export class UsuariosComponent implements OnInit,OnDestroy {
   }
 
   llenarForm(id:string){
-  
+
     this.usuarioSvc.obtenerIdUsuario(id).subscribe(res=>{
-      
+
      this.registerForm.setValue({
-        
+
       nombre:res['nombre'],
       email: res['email'],
       password: '',
@@ -130,7 +129,7 @@ export class UsuariosComponent implements OnInit,OnDestroy {
   }
 
   editarUsuario(){
-    
+
     this.usuarioSvc.editarUsuario(localStorage.getItem('idUser'), this.registerForm.value).subscribe(res=>{
 
       Swal.fire({
@@ -141,10 +140,10 @@ export class UsuariosComponent implements OnInit,OnDestroy {
       }).then((result)=>{
 
         if (result) {
-            
+
           localStorage.removeItem('idUser');
           localStorage.removeItem('userId');
-       
+
           location.reload();
 
         }
@@ -153,7 +152,7 @@ export class UsuariosComponent implements OnInit,OnDestroy {
 
 
     },(err)=>{
-      
+
          Swal.fire('Error', err.error.message, 'error');
 
     });
@@ -163,9 +162,9 @@ export class UsuariosComponent implements OnInit,OnDestroy {
 
 
   changePassword(){
-      
+
     this.usuarioSvc.cambioPassword(localStorage.getItem('userId'),this.cambioContrasena.value).subscribe(res=>{
-        
+
       Swal.fire({
         icon:'success',
         title: 'El password se actualizo correctamente',
@@ -180,21 +179,21 @@ export class UsuariosComponent implements OnInit,OnDestroy {
       });
 
     }, (err)=>{
-          
+
       const errorPass = JSON.parse(err.error);
 
       Swal.fire('Error', errorPass.message, 'error');
 
     });
-  
+
   }
 
   eliminarUsuario(id:string){
-   
+
     if (id == localStorage.getItem('usuarioId')) {
       Swal.fire('Error', 'No puede eliminar un usuario activo', 'error');
     }else{
-    
+
     Swal.fire({
       icon:'question',
       title:'Desea eliminar este usuario?',
@@ -203,27 +202,27 @@ export class UsuariosComponent implements OnInit,OnDestroy {
     }).then((result)=>{
         if (result.isConfirmed) {
           this.usuarioSvc.deleteUsuario(id).subscribe((res:any)=>{
-            
+
             Swal.fire({
               icon:'success',
               title:'Usuario eliminado correctamente',
-              confirmButtonText:'Ok'            
+              confirmButtonText:'Ok'
             }).then((result)=>{
-                
+
               if (result) {
                 location.reload();
               }
-  
+
             });
-  
+
           }, (err)=>{
             Swal.fire('Error', err.error.message, 'error')
           })
-          
-        }      
+
+        }
 
     });
-  } 
+  }
 
   }
 
@@ -239,7 +238,7 @@ export class UsuariosComponent implements OnInit,OnDestroy {
   }
 
   changeRole(evento){
-    
+
     console.log(evento.target.value);
 
     this.roles.setValue(evento.target.value, {

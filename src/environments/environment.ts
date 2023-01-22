@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  urlServer: 'http://localhost:3000'
+  urlServer: 'http://localhost:3000',
+  urlBackend: 'http://localhost:5000/rgb-aqua-mart/',
 };
 
 /*

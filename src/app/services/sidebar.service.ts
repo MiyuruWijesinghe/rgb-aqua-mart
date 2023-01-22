@@ -14,7 +14,7 @@ export class SidebarService {
     title: 'Item Details',
     icon: '"nav-icon fa fa-shopping-bag',
     submenu: [
-      { title: 'Brands', url: 'usuarios', icon: '"nav-icon fa fa-certificate' },
+      { title: 'Brands', url: 'brands', icon: '"nav-icon fa fa-certificate' },
       { title: 'Categories', url: 'productos', icon: '"nav-icon fa fa-th-large' },
       { title: 'Sub Categories', url: 'stock', icon: '"nav-icon fa fa-th' },
       { title: 'Attributes', url: 'stock', icon: '"nav-icon fa fa-th-list' },

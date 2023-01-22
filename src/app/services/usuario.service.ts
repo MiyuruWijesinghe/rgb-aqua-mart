@@ -15,78 +15,58 @@ const URL = environment.urlServer;
 })
 export class UsuarioService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
-  newUsuario(formData:RegisterForm){
-    
-    return this.http.post(`${URL}/usuarios`, formData, {responseType: 'text'}); 
-
+  newUsuario(formData: RegisterForm){
+    return this.http.post(`${URL}/usuarios`, formData, {responseType: 'text'});
   }
 
-  login(formData:LoginForm){
-      
-    return this.http.post(`${URL}/auth/login`, formData).pipe(tap((res:any)=>{
+  login(formData: LoginForm){
+    return this.http.post(`${URL}/auth/login`, formData).pipe(tap((res: any) => {
       console.log(res);
-      localStorage.setItem('token',res.token);
+      localStorage.setItem('token', res.token);
       localStorage.setItem('usuarioId', res.usuario.id);
       localStorage.setItem('nombre', res.usuario.nombre);
-    })) 
-  
+    }));
   }
 
-  get token():string{
+  get token(): string{
     return localStorage.getItem('token');
   }
 
   obtenerUsuarios(){
-    
     let headers = new HttpHeaders({
       'token': localStorage.getItem('token')
     });
-
-  return this.http.get(`${URL}/usuarios`,{headers}); 
-
+    return this.http.get(`${URL}/usuarios`,{headers});
   }
 
-  deleteUsuario(id:string){
-
-
-    
+  obtenerIdUsuario(id: string){
     let headers = new HttpHeaders({
       'token': this.token
     });
-
-    return this.http.delete(`${URL}/usuarios/${id}`, {headers}); 
-
-  }
-
-  cambioPassword(id:string, cambioPass:CambioPassword){
-
-    let headers = new HttpHeaders({
-      'token': this.token
-    });
-
-    return this.http.put(`${URL}/usuarios/cambio-password/${id}`, cambioPass, {headers, responseType:'text'} ); 
-
-  }
-
-  obtenerIdUsuario(id:string){
-  
-    let headers = new HttpHeaders({
-      'token': this.token
-    });
-
     return this.http.get(`${URL}/usuarios/${id}`,{headers});
-
   }
 
-  editarUsuario(id:string, editData:EditForm){
+  editarUsuario(id: string, editData: EditForm){
     let headers = new HttpHeaders({
       'token': this.token
     });
-
     return this.http.put(`${URL}/usuarios/${id}`, editData, {headers});
+  }
 
+  cambioPassword(id: string, cambioPass: CambioPassword){
+    let headers = new HttpHeaders({
+      'token': this.token
+    });
+    return this.http.put(`${URL}/usuarios/cambio-password/${id}`, cambioPass, {headers, responseType: 'text'});
+  }
+
+  deleteUsuario(id: string){
+    let headers = new HttpHeaders({
+      'token': this.token
+    });
+    return this.http.delete(`${URL}/usuarios/${id}`, {headers});
   }
 
 }

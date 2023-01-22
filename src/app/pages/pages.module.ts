@@ -9,8 +9,7 @@ import { RouterModule } from '@angular/router';
 import { StockComponent } from './stock/stock.component';
 import { DataTablesModule } from 'angular-datatables';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
-
+import { BrandsComponent } from './brands/brands.component';
 
 
 @NgModule({
@@ -20,13 +19,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ProductosComponent,
     PagesComponent,
     StockComponent,
+    BrandsComponent,
   ],
   exports: [
     DashboardComponent,
     UsuariosComponent,
     ProductosComponent,
     StockComponent,
-    PagesComponent
+    PagesComponent,
+    BrandsComponent
   ],
   imports: [
     CommonModule,
