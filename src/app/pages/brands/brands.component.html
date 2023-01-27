@@ -5,7 +5,7 @@
         <div class="card">
           <div class="card-header">
             <h3 class="card-title">Brands List</h3><br>
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarUsuario">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addRecord">
               <i class="fas fa-user-plus"></i> Add Brand
             </button>
           </div>
@@ -27,7 +27,7 @@
                 <td>{{record.name}}</td>
                 <td>{{record.status}}</td>
                 <td>{{record.createdUser}}</td>
-                <td><button class="btn btn-warning btn-xs mr-2"><i class="fas fa-pencil-alt"></i></button>
+                <td><button class="btn btn-warning btn-xs mr-2" (click)="viewRecord(record.id)"><i class="fas fa-pencil-alt"></i></button>
                   <button class="btn btn-danger btn-xs" (click)="deleteRecord(record.id)"><i class="fas fa-trash-alt"></i></button>
                 </td>
               </tr>
@@ -39,17 +39,119 @@
         <!-- /.card -->
 
 
-        <!-- /Modal Agregar Usuario -->
+        <!-- /Modal Add Record -->
+        <div class="modal fade" id="addRecord">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Add Brand</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="createRecord()" [formGroup]="addRecordForm" autocomplete="off">
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Name" formControlName="name">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                      </div>
+                    </div>
+                  </div><p class="text-danger" *ngIf="invalidField('name')">Name is required.</p>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Description" formControlName="description">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                      </div>
+                    </div>
+                  </div><p class="text-danger" *ngIf="invalidField('description')">Description is required.</p>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Logo" formControlName="logoURL">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                      </div>
+                    </div>
+                  </div><p class="text-danger" *ngIf="invalidField('logoURL')">Logo is required.</p>
+                  <div class="form-group mb-3">
+                    <select class="form-control" formControlName="status" (change)="changeStatus($event)">
+                      <option value="">Select status</option>
+                      <option *ngFor="let status of Statuses" >{{status}}</option>
+                    </select>
+                  </div><p class="text-danger" *ngIf="invalidField('status')">Status is required.</p>
+                  <div class="row">
+                    <div class="modal-footer justify-content-between">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
 
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
         <!-- /.modal -->
 
 
+        <!-- /Modal Edit Record -->
         <!-- /Modal Agregar Usuario -->
-
-        <!-- /.modal -->
-
-
-
-        <!-- /Modal Cambiar Password -->
-
+        <div class="modal fade" id="editRecord">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">Edit Brand</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form (ngSubmit)="editRecord()" [formGroup]="addRecordForm" autocomplete="off">
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Name" formControlName="name">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-user" style="color: rgb(48, 37, 37);"></span>
+                      </div>
+                    </div>
+                  </div><p class="text-danger" *ngIf="invalidField('name')">Name is required.</p>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Description" formControlName="description">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                      </div>
+                    </div>
+                  </div><p class="text-danger" *ngIf="invalidField('description')">Description is required.</p>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Logo" formControlName="logoURL">
+                    <div class="input-group-append">
+                      <div class="input-group-text">
+                        <span class="fas fa-envelope" style="color: rgb(48, 37, 37);"></span>
+                      </div>
+                    </div>
+                  </div><p class="text-danger" *ngIf="invalidField('logoURL')">Logo is required.</p>
+                  <div class="form-group mb-3">
+                    <select class="form-control" formControlName="status" (change)="changeStatus($event)">
+                      <option value="">Select status</option>
+                      <option *ngFor="let status of Statuses" >{{status}}</option>
+                    </select>
+                  </div><p class="text-danger" *ngIf="invalidField('status')">Status is required.</p>
+                  <div class="row">
+                    <div class="modal-footer justify-content-between">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
         <!-- /.modal -->

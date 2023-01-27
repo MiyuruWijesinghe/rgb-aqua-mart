@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { RegisterForm } from '../interfaces/register-form.interface';
-import { LoginForm } from '../interfaces/login-form.interface';
 import { environment } from '../../environments/environment';
-import {tap} from 'rxjs/operators'
-import { CambioPassword } from '../interfaces/cambio-password.interface';
-import { EditForm } from '../interfaces/edit-form-interface';
+import { AddBrandForm } from '../interfaces/brands/add-brand-form.interface';
+import { EditBrandForm } from '../interfaces/brands/edit-brand-form.interface';
 
-// http://localhost:3000
 const URL = environment.urlBackend;
 
 @Injectable({
@@ -40,6 +36,20 @@ export class BrandService {
       'token': this.token
     });
     return this.http.delete(`${URL}/brand/${id}`, {headers});
+  }
+
+  add(formData: AddBrandForm){
+    let headers = new HttpHeaders({
+      'username': localStorage.getItem('nombre')
+    });
+    return this.http.post(`${URL}/brand/save`, formData, {headers});
+  }
+
+  edit(id: string, editData: EditBrandForm){
+    let headers = new HttpHeaders({
+      'username': localStorage.getItem('nombre')
+    });
+    return this.http.put(`${URL}/brand/${id}`, editData, {headers});
   }
 
 }
